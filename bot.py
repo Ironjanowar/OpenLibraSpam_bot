@@ -34,9 +34,8 @@ def isAdmin_fromPrivate(message):
 
 @bot.message_handler(content_types=['document'])
 def spam_pdf(message):
-    if message.document.file_name.endswith(".pdf"):
-#        bot.forward_message("@openlibra_channel", message.chat.id, message.message_id, disable_notification=True)
-        bot.send_document("@openlibra_channel", message.document)
+    if message.document.file_name is not None and message.document.file_name.endswith(".pdf"):
+        bot.send_document("@openlibra_channel", message.document.file_id)
         bot.reply_to(message, "Mensaje reenviado a @openlibra_channel")
 
 
