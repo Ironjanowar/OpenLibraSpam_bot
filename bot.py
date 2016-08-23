@@ -2,6 +2,7 @@ import telebot
 import os.path as path
 import sys
 import json
+from telebot import types
 
 # Creamos el bot
 if not path.isfile("bot.token"):
@@ -35,8 +36,23 @@ def isAdmin_fromPrivate(message):
 @bot.message_handler(content_types=['document'])
 def spam_pdf(message):
     if message.document.file_name is not None and message.document.file_name.endswith(".pdf"):
-        bot.send_document("@openlibra_channel", message.document.file_id)
-        bot.reply_to(message, "Mensaje reenviado a @openlibra_channel")
+        markup = types.InlineKeyboardMarkup()
+        button_callback = "Si:" + str(message.document.file_id)
+        si_button = types.InlineKeyboardButton("Si", callback_data=button_callback)
+        no_button = types.InlineKeyboardButton("No", callback_data="No")
+        markup.add(si_button, no_button)
+        bot.reply_to(message, "Quieres reenviar este archivo?", reply_markup=markup)
+
+
+@bot.callback_query_handler(func=lambda callback: callback.data.startswith("Si:"))
+def catch_si(c):
+    bot.send_document("@openlibra_channel", c.data.split(':')[1])
+    bot.edit_message_text("Archivo reenviado a @openlibra_channel", chat_id=c.message.chat.id, message_id=c.message.message_id)
+
+
+@bot.callback_query_handler(func=lambda callback: callback.data == "No")
+def catch_no(c):
+    bot.edit_message_text("El archivo no se enviará", chat_id=c.message.chat.id, message_id=c.message.message_id)
 
 
 @bot.message_handler(commands=['update'])
@@ -47,6 +63,9 @@ def auto_update(message):
         sys.exit()
     else:
         bot.reply_to(message, "Este comando es solo para admins y debe ser enviado por privado")
+
+# Quitar
+bot.skip_pending = True
 
 # Correr bot
 print("Running...")
