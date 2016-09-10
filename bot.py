@@ -29,7 +29,7 @@ formats = [".pdf", ".epub", ".mobi", ".azw", ".azw3"]
 def make_string(string_list):
     ret = ""
     for string in string_list:
-        ret += "- " + string + "\n"
+        ret += " - " + string + "\n"
     return ret
 
 
@@ -93,7 +93,7 @@ def is_up(message):
 
 @bot.message_handler(commands=['formats'])
 def send_formats(message):
-    bot.send_message(message.chat.id, "_This are the current formats that I admit:_\n``` " + make_string(formats) + "```", parse_mode="Markdown")
+    bot.send_message(message.chat.id, "_This are the current formats that I admit:_ \n```" + make_string(formats) + "```", parse_mode="Markdown")
 
 # Quitar
 bot.skip_pending = True
