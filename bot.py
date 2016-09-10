@@ -26,6 +26,13 @@ formats = [".pdf", ".epub", ".mobi", ".azw", ".azw3"]
 # Funciones
 
 
+def make_string(string_list):
+    ret = ""
+    for string in string_list:
+        ret += "- " + string + "\n"
+    return ret
+
+
 def isAdmin_fromPrivate(message):
     if message.chat.type == 'private':
         userID = message.from_user.id
@@ -83,6 +90,10 @@ def auto_update(message):
 def is_up(message):
     bot.reply_to(message, "I'm up! :D")
 
+
+@bot.message_handler(commands=['formats'])
+def formats(message):
+    bot.reply_to(message, "This are the current formats that I admit:\n" + make_string(formats))
 
 # Quitar
 bot.skip_pending = True
