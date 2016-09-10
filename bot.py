@@ -35,6 +35,7 @@ def isAdmin_fromPrivate(message):
 
 @bot.message_handler(content_types=['document'])
 def spam_pdf(message):
+    print("Documento detectado\n")
     if message.document.file_name is not None and message.document.file_name.endswith(".pdf"):
         markup = types.InlineKeyboardMarkup()
         button_callback = "Si:" + str(message.document.file_id)
@@ -48,11 +49,13 @@ def spam_pdf(message):
 def catch_si(c):
     bot.send_document("@openlibra_channel", c.data.split(':')[1])
     bot.edit_message_text("Archivo reenviado a @openlibra_channel", chat_id=c.message.chat.id, message_id=c.message.message_id)
+    print("Documento enviado\n")
 
 
 @bot.callback_query_handler(func=lambda callback: callback.data == "No")
 def catch_no(c):
     bot.edit_message_text("El archivo no se enviará", chat_id=c.message.chat.id, message_id=c.message.message_id)
+    print("Archivo ignorado\n")
 
 
 @bot.message_handler(commands=['update'])
