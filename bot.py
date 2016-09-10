@@ -92,7 +92,7 @@ def is_up(message):
 
 
 @bot.message_handler(commands=['formats'])
-def formats(message):
+def send_formats(message):
     bot.reply_to(message, "This are the current formats that I admit:\n" + make_string(formats))
 
 # Quitar
