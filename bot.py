@@ -21,7 +21,7 @@ with open('./data/admins.json', 'r') as adminData:
     admins = json.load(adminData)
 
 # Vars
-formats = [".pdf", ".epub", ".mobi", ".azw"]
+formats = [".pdf", ".epub", ".mobi", ".azw", ".azw3"]
 
 # Funciones
 
