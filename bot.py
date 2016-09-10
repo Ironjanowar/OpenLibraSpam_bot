@@ -20,6 +20,9 @@ if not path.isfile("./data/admins.json"):
 with open('./data/admins.json', 'r') as adminData:
     admins = json.load(adminData)
 
+# Vars
+formats = [".pdf", ".epub", ".mobi", ".azw"]
+
 # Funciones
 
 
@@ -30,13 +33,21 @@ def isAdmin_fromPrivate(message):
             return True
     return False
 
+
+def file_format(file_name):
+    for file_format in formats:
+        if file_name.endswith(file_format):
+            return True
+    # Si no es un formate valido
+    return False
+
 # Handlers
 
 
 @bot.message_handler(content_types=['document'])
 def spam_pdf(message):
     print("Documento detectado\n")
-    if message.document.file_name is not None and message.document.file_name.endswith(".pdf"):
+    if message.document.file_name is not None and file_format(message.document.file_name):
         markup = types.InlineKeyboardMarkup()
         button_callback = "Si:" + str(message.document.file_id)
         si_button = types.InlineKeyboardButton("Si", callback_data=button_callback)
