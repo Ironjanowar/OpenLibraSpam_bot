@@ -29,7 +29,8 @@ formats = [".pdf", ".epub", ".mobi", ".azw", ".azw3"]
 def make_string(string_list):
     ret = ""
     for string in string_list:
-        ret += "- " + string + "\n"
+        ret += "- " + string
+        ret += "\n"
     return ret
 
 
