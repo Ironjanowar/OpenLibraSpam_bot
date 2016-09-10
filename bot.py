@@ -64,6 +64,12 @@ def auto_update(message):
     else:
         bot.reply_to(message, "Este comando es solo para admins y debe ser enviado por privado")
 
+
+@bot.message_handler(commands=['isup'])
+def is_up(message):
+    bot.reply_to(message, "I'm up! :D")
+
+
 # Quitar
 bot.skip_pending = True
 
